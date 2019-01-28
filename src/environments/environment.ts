@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  netPresentValueApi: 'http://localhost:22576/api/netpresentvalue'
 };
 
 /*

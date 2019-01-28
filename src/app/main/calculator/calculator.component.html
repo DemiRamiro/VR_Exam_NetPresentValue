@@ -1,0 +1,76 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="content">
+  <p-fieldset legend="Net Present Value Calculator">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 p-lg-5">
+        <form class="netPresentValueForm" [formGroup]="netPresentValueForm">
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Cash Inflow</label>
+              <input pInputText formControlName="cashInflow" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.cashInflow.errors }" />
+              <div *ngIf="submitted && form.cashInflow.errors" class="invalid-feedback">
+                <div *ngIf="form.cashInflow.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Cash Outflow</label>
+              <input pInputText formControlName="cashOutflow" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.cashOutflow.errors }" />
+              <div *ngIf="submitted && form.cashOutflow.errors" class="invalid-feedback">
+                <div *ngIf="form.cashOutflow.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Lower Bound Discount Rate in Percentage</label>
+              <input pInputText formControlName="lowerBoundDiscountRate" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.lowerBoundDiscountRate.errors }" />
+              <div *ngIf="submitted && form.lowerBoundDiscountRate.errors" class="invalid-feedback">
+                <div *ngIf="form.lowerBoundDiscountRate.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Upper Bound Discount Rate in Percentage</label>
+              <input pInputText formControlName="upperBoundDiscountRate" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.upperBoundDiscountRate.errors }" />
+              <div *ngIf="submitted && form.upperBoundDiscountRate.errors" class="invalid-feedback">
+                <div *ngIf="form.upperBoundDiscountRate.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Discount Rate Increment in Percentage</label>
+              <input pInputText formControlName="discountRateIncrement" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.discountRateIncrement.errors }" />
+              <div *ngIf="submitted && form.discountRateIncrement.errors" class="invalid-feedback">
+                <div *ngIf="form.discountRateIncrement.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-12">
+              <label class="text-normal text-dark">Time Period per Year</label>
+              <input pInputText formControlName="timePeriod" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.timePeriod.errors }" />
+              <div *ngIf="submitted && form.timePeriod.errors" class="invalid-feedback">
+                <div *ngIf="form.timePeriod.errors.required">required</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-grid">
+            <div class="p-col-2" style="margin-right: 5px;">
+              <button pButton [disabled]="loading" label="Calculate" (click)="onSubmit()"></button>
+            </div>
+            <div class="p-col-2">
+              <button pButton class="ui-button-secondary button" [disabled]="loading" label="Clear"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-6">
+        <p-chart type="bar" [data]="data"></p-chart>
+      </div>
+    </div>
+  </p-fieldset>
+</div>
