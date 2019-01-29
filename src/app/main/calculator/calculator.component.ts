@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { NetPresentValueService } from 'src/app/shared/services';
 
@@ -11,6 +11,8 @@ import { NetPresentValueService } from 'src/app/shared/services';
 export class CalculatorComponent implements OnInit {
 
   netPresentValueForm: FormGroup;
+  cashFlowForm: FormGroup;
+  cashFlows: FormArray;
   data: any;
   submitted = false;
   loading = false;
@@ -23,16 +25,33 @@ export class CalculatorComponent implements OnInit {
 
   ngOnInit() {
     this.netPresentValueForm = this.formBuilder.group({
-      cashInflow: ['', Validators.required],
-      cashOutflow: ['', Validators.required],
+      cashFlows: this.formBuilder.array([this.createCashFlow()]),
       lowerBoundDiscountRate: ['', Validators.required],
       upperBoundDiscountRate: ['', Validators.required],
       discountRateIncrement: ['', Validators.required],
-      timePeriod: ['', Validators.required]
     });
   }
 
   get form() { return this.netPresentValueForm.controls; }
+
+  get cfForm() { return this.cashFlowForm.controls }
+
+  createCashFlow() {
+    this.cashFlowForm = this.formBuilder.group({
+      cashFlow: []
+    });
+
+    return this.cashFlowForm;
+  }
+
+  addCashFlow() {
+    this.cashFlows = this.netPresentValueForm.get('cashFlows') as FormArray;
+    this.cashFlows.push(this.createCashFlow());
+  }
+
+  removeCashFlow(index: number) {
+    this.cashFlows.removeAt(index);
+  }
 
   onSubmit() {
     this.submitted = true;

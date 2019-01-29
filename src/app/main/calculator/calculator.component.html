@@ -4,21 +4,19 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-6 p-lg-5">
         <form class="netPresentValueForm" [formGroup]="netPresentValueForm">
-          <div class="p-grid">
-            <div class="p-col-12">
-              <label class="text-normal text-dark">Cash Inflow</label>
-              <input pInputText formControlName="cashInflow" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.cashInflow.errors }" />
-              <div *ngIf="submitted && form.cashInflow.errors" class="invalid-feedback">
-                <div *ngIf="form.cashInflow.errors.required">required</div>
-              </div>
-            </div>
-          </div>
-          <div class="p-grid">
-            <div class="p-col-12">
-              <label class="text-normal text-dark">Cash Outflow</label>
-              <input pInputText formControlName="cashOutflow" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.cashOutflow.errors }" />
-              <div *ngIf="submitted && form.cashOutflow.errors" class="invalid-feedback">
-                <div *ngIf="form.cashOutflow.errors.required">required</div>
+          <div formArrayName="cashFlows" *ngFor="let item of netPresentValueForm.get('cashFlows').controls; let i = index;">
+            <div [formGroupName]="i">
+              <div class="p-grid">
+                <div class="p-col-12">
+                  <label class="text-normal text-dark">Cash Flow {{i}}</label>
+                  <div class="ui-inputgroup">
+                    <input pInputText formControlName="cashFlow" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted &&  cfForm.cashFlow.errors }"/>
+                    <button pButton type="button" *ngIf="i > 0" label="Remove" (click)="removeCashFlow(i)"></button>
+                  </div>
+                  <div *ngIf="submitted && cfForm.cashFlow.errors" class="invalid-feedback">
+                    <div *ngIf="cfForm.cashFlow.errors.required">required</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -50,15 +48,9 @@
             </div>
           </div>
           <div class="p-grid">
-            <div class="p-col-12">
-              <label class="text-normal text-dark">Time Period per Year</label>
-              <input pInputText formControlName="timePeriod" class="form-control" type="number" [ngClass]="{ 'is-invalid': submitted && form.timePeriod.errors }" />
-              <div *ngIf="submitted && form.timePeriod.errors" class="invalid-feedback">
-                <div *ngIf="form.timePeriod.errors.required">required</div>
-              </div>
+            <div class="p-col-4" style="margin-right: 5px;">
+              <button pButton [disabled]="loading" label="Add Cash Flow" (click)="addCashFlow()"></button>
             </div>
-          </div>
-          <div class="p-grid">
             <div class="p-col-2" style="margin-right: 5px;">
               <button pButton [disabled]="loading" label="Calculate" (click)="onSubmit()"></button>
             </div>
